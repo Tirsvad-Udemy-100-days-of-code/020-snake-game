@@ -2,9 +2,10 @@
 @brief The snake: a list of square segments that the game draws and moves.
 
 The class follows the lectures "Create a Snake Class & Move to OOP", "Animating
-the Snake Segments on Screen" and "Controlling the Snake with Keypresses". It
-keeps the lectures' names: `Snake`, `segments`, `create_snake`, `move`, `head`,
-`up`, `down`, `left` and `right`. The only differences are that the snake gets
+the Snake Segments on Screen" and "Controlling the Snake with Keypresses", and
+the day-21 step in which the snake grows. It keeps the lectures' names: `Snake`,
+`segments`, `create_snake`, `add_segment`, `extend`, `move`, `head`, `up`, `down`,
+`left` and `right`. The only differences are that the snake gets
 the function that makes a segment as a parameter, so that a test can pass a fake
 and needs no window, and how a reversal is refused (see Snake).
 """
@@ -79,6 +80,21 @@ class Segment(Protocol):
         """
         ...
 
+    def position(self) -> tuple[float, float]:
+        """! @brief Tell where the segment is.
+
+        @return The x and y coordinates.
+        """
+        ...
+
+    def distance(self, x: tuple[float, float], /) -> float:
+        """! @brief Tell how far the segment is from a position.
+
+        @param x The x and y coordinates of the other place.
+        @return The distance in pixels.
+        """
+        ...
+
     def heading(self) -> float:
         """! @brief Tell the direction the segment points, in degrees.
 
@@ -135,16 +151,33 @@ class Snake:
     def create_snake(self) -> None:
         """! @brief Draw one white square segment at each starting position.
 
-        The pen is lifted before a segment is sent to its position, so no line is
-        drawn. The segments are kept in `segments`, the head first.
+        The segments are kept in `segments`, the head first.
         """
-        for x, y in STARTING_POSITIONS:
-            new_segment = self._segment_factory()
-            new_segment.shape(SEGMENT_SHAPE)
-            new_segment.color(SEGMENT_COLOR)
-            new_segment.penup()
-            new_segment.goto(x, y)
-            self.segments.append(new_segment)
+        for position in STARTING_POSITIONS:
+            self.add_segment(position)
+
+    def add_segment(self, position: tuple[float, float]) -> None:
+        """! @brief Add a white square segment at the end of the snake.
+
+        The pen is lifted before the segment is sent to its position, so no line is
+        drawn.
+
+        @param position The x and y coordinates of the new segment.
+        """
+        new_segment = self._segment_factory()
+        new_segment.shape(SEGMENT_SHAPE)
+        new_segment.color(SEGMENT_COLOR)
+        new_segment.penup()
+        new_segment.goto(*position)
+        self.segments.append(new_segment)
+
+    def extend(self) -> None:
+        """! @brief Make the snake one segment longer.
+
+        The new segment appears where the last segment is, and follows it on the
+        next move.
+        """
+        self.add_segment(self.segments[-1].position())
 
     def move(self) -> None:
         """! @brief Move the snake one step along its path.
