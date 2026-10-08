@@ -1,5 +1,8 @@
 """Tests of the snake, with fakes instead of real turtles."""
 
+import math
+from collections.abc import Sequence
+
 import pytest
 
 from fakes import (
@@ -9,7 +12,7 @@ from fakes import (
     make_snake,
 )
 from snake_game import constants
-from snake_game.snake import Snake
+from snake_game.snake import Segment, Snake
 
 DIRECTIONS = {
     "up": constants.UP,
@@ -25,7 +28,7 @@ OPPOSITE = {
 }
 
 
-def positions(segments: list[FakeSegment]) -> list[tuple[float, float]]:
+def positions(segments: Sequence[Segment]) -> list[tuple[float, float]]:
     """Return where every segment is, head first."""
     return [segment.position() for segment in segments]
 
@@ -218,3 +221,61 @@ def test_a_turn_is_accepted_after_the_move_that_followed_the_first_turn() -> Non
     snake.left()
 
     assert snake.head.heading() == constants.LEFT
+
+
+def test_add_segment_puts_a_white_square_with_the_pen_up_at_the_position() -> None:
+    snake, created = make_snake()
+
+    snake.add_segment((100, -60))
+
+    new = created[-1]
+    assert snake.segments[-1] is new
+    assert ("shape", ("square",)) in new.calls
+    assert ("color", ("white",)) in new.calls
+    assert new.call_names().index("penup") < new.call_names().index("goto")
+    assert new.position() == (100, -60)
+
+
+def test_extend_adds_one_segment_where_the_last_segment_is() -> None:
+    snake, created = make_snake()
+    last_place = created[-1].position()
+
+    snake.extend()
+
+    assert len(snake.segments) == len(constants.STARTING_POSITIONS) + 1
+    assert snake.segments[-1].position() == last_place
+
+
+def test_extend_twice_adds_two_segments() -> None:
+    snake, _ = make_snake()
+
+    snake.extend()
+    snake.extend()
+
+    assert len(snake.segments) == len(constants.STARTING_POSITIONS) + 2
+
+
+def test_head_stays_the_first_segment_after_extend() -> None:
+    snake, created = make_snake()
+
+    snake.extend()
+
+    assert snake.head is created[0]
+    assert snake.segments[0] is created[0]
+
+
+def test_the_new_segment_follows_the_snake_and_the_body_stays_joined_when_turning() -> (
+    None
+):
+    snake, _ = make_snake()
+    snake.up()
+    snake.move()
+    snake.extend()
+
+    snake.move()
+
+    places = positions(snake.segments)
+    gaps = [
+        math.dist(places[index], places[index + 1]) for index in range(len(places) - 1)
+    ]
+    assert gaps == [constants.MOVE_DISTANCE] * (len(places) - 1)

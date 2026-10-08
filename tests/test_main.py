@@ -3,17 +3,32 @@
 import pytest
 
 from fakes import (
+    FakeFood,
+    FakeScoreboard,
     FakeScreen,
     FakeTclError,
     FakeTerminatorError,
     imports_turtle_or_tkinter,
     install_fake_turtle,
     make_snake,
+    script_randint,
 )
 from snake_game import constants
-from snake_game.main import bind_keys, configure_screen, main, play_frame
+from snake_game.main import (
+    bind_keys,
+    configure_screen,
+    eat_food_if_close,
+    main,
+    play_frame,
+)
 
 ARROW_KEYS = ("Up", "Down", "Left", "Right")
+
+
+@pytest.fixture(autouse=True)
+def food_far_away(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Make the food appear at the top right corner of the wall, far from the snake."""
+    script_randint(monkeypatch, [])
 
 
 @pytest.fixture
@@ -117,10 +132,13 @@ def test_main_draws_the_snake_before_the_first_frame(
 
     main()
 
-    assert len(turtles) == len(constants.STARTING_POSITIONS)
+    snake_segments = turtles[: len(constants.STARTING_POSITIONS)]
+    assert len(turtles) == len(constants.STARTING_POSITIONS) + 2  # food, scoreboard
     assert all(
         ("goto", position) in turtle.calls
-        for turtle, position in zip(turtles, constants.STARTING_POSITIONS, strict=True)
+        for turtle, position in zip(
+            snake_segments, constants.STARTING_POSITIONS, strict=True
+        )
     )
 
 
@@ -149,6 +167,81 @@ def test_main_lets_other_errors_through(
 
     with pytest.raises(KeyError):
         main()
+
+
+def test_the_snake_eats_food_closer_than_the_eating_distance() -> None:
+    snake, created = make_snake()
+    food = FakeFood(constants.FOOD_COLLISION_DISTANCE - 1, 0)
+    scoreboard = FakeScoreboard()
+
+    eat_food_if_close(snake, food, scoreboard)
+
+    assert food.refreshes == 1
+    assert scoreboard.increases == 1
+    assert len(snake.segments) == len(created) == len(constants.STARTING_POSITIONS) + 1
+
+
+@pytest.mark.parametrize(
+    "place",
+    [
+        (constants.FOOD_COLLISION_DISTANCE, 0),
+        (0, -constants.FOOD_COLLISION_DISTANCE),
+        (2 * constants.FOOD_COLLISION_DISTANCE, 0),
+        (200, 200),
+    ],
+)
+def test_the_snake_does_not_eat_food_at_or_beyond_the_eating_distance(
+    place: tuple[int, int],
+) -> None:
+    snake, _ = make_snake()
+    food = FakeFood(*place)
+    scoreboard = FakeScoreboard()
+
+    eat_food_if_close(snake, food, scoreboard)
+
+    assert food.refreshes == 0
+    assert scoreboard.increases == 0
+    assert len(snake.segments) == len(constants.STARTING_POSITIONS)
+
+
+def test_the_snake_eats_food_that_is_close_diagonally() -> None:
+    snake, _ = make_snake()
+    food = FakeFood(10, 10)  # a distance of about 14.1
+    scoreboard = FakeScoreboard()
+
+    eat_food_if_close(snake, food, scoreboard)
+
+    assert scoreboard.increases == 1
+
+
+def test_main_lets_the_snake_eat_the_food_that_lies_on_its_way(
+    monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
+) -> None:
+    script_randint(monkeypatch, [20, 0])  # the first food lies one move ahead
+    turtles, _ = install_fake_turtle(monkeypatch, frames_before_close=1)
+
+    main()
+
+    snake_head, _, _, food, scoreboard, new_segment = turtles
+    assert snake_head.position() == (20, 0)
+    assert [call for call in food.calls if call[0] == "goto"] == [
+        ("goto", (20, 0)),
+        ("goto", (constants.WALL_LIMIT, constants.WALL_LIMIT)),
+    ]
+    assert scoreboard.calls[-1][1][0] == "Score: 1"
+    assert new_segment.position() == (-20, 0)  # where the last segment was
+
+
+def test_main_does_not_raise_the_score_when_the_food_is_far_away(
+    monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
+) -> None:
+    turtles, _ = install_fake_turtle(monkeypatch, frames_before_close=3)
+
+    main()
+
+    scoreboard = turtles[4]
+    assert scoreboard.calls[-1][1][0] == "Score: 0"
+    assert len(turtles) == len(constants.STARTING_POSITIONS) + 2
 
 
 def test_importing_the_main_module_does_not_import_turtle_or_tkinter() -> None:

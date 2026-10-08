@@ -3,7 +3,7 @@
 
 The flow follows the lectures "Screen Setup and Creating a Snake Body",
 "Animating the Snake Segments on Screen" and "Controlling the Snake with
-Keypresses".
+Keypresses", and the day-21 steps in which the snake eats food and the score rises.
 """
 
 import time
@@ -11,6 +11,7 @@ from collections.abc import Callable
 from typing import Protocol
 
 from snake_game.constants import (
+    FOOD_COLLISION_DISTANCE,
     REFRESH_DELAY_SECONDS,
     SCREEN_BACKGROUND_COLOR,
     SCREEN_HEIGHT,
@@ -65,6 +66,35 @@ class ScreenLike(Protocol):
         ...
 
 
+class FoodLike(Protocol):
+    """! @brief What `eat_food_if_close` needs from the food.
+
+    A `Food` fits this description, and so does a fake in a test.
+    """
+
+    def refresh(self) -> None:
+        """! @brief Move the food to a new random place."""
+        ...
+
+    def position(self) -> tuple[float, float]:
+        """! @brief Tell where the food is.
+
+        @return The x and y coordinates.
+        """
+        ...
+
+
+class ScoreboardLike(Protocol):
+    """! @brief What `eat_food_if_close` needs from the scoreboard.
+
+    A `Scoreboard` fits this description, and so does a fake in a test.
+    """
+
+    def increase_score(self) -> None:
+        """! @brief Add 1 to the score and write it."""
+        ...
+
+
 def configure_screen(screen: ScreenLike) -> None:
     """! @brief Give the screen the size, background colour and title of the game.
 
@@ -102,6 +132,22 @@ def play_frame(screen: ScreenLike, snake: Snake) -> None:
     snake.move()
 
 
+def eat_food_if_close(snake: Snake, food: FoodLike, scoreboard: ScoreboardLike) -> None:
+    """! @brief Let the snake eat the food when the head is close enough to it.
+
+    Eating moves the food to a new place, makes the snake one segment longer and
+    adds 1 to the score. The head must be closer than `FOOD_COLLISION_DISTANCE`.
+
+    @param snake The snake.
+    @param food The food.
+    @param scoreboard The scoreboard that shows the score.
+    """
+    if snake.head.distance(food.position()) < FOOD_COLLISION_DISTANCE:
+        food.refresh()
+        snake.extend()
+        scoreboard.increase_score()
+
+
 def main() -> None:
     """! @brief Open the game window and run the snake until the window is closed.
 
@@ -112,22 +158,29 @@ def main() -> None:
     `screen.exitonclick()` after the loop waits for a click once the game is over,
     which the day-21 rules will cause.
 
-    `turtle` and `tkinter` are imported here and not at the top of the module, so
-    that importing this module needs neither a display nor `tkinter`.
+    `turtle` and `tkinter` are imported here and not at the top of the module, and
+    so are `food` and `scoreboard`, whose classes inherit from `Turtle`: importing
+    this module needs neither a display nor `tkinter`.
     """
     from tkinter import TclError
     from turtle import Screen, Terminator
+
+    from snake_game.food import Food
+    from snake_game.scoreboard import Scoreboard
 
     screen = Screen()
     configure_screen(screen)
     screen.tracer(0)
     snake = Snake()
+    food = Food()
+    scoreboard = Scoreboard()
     bind_keys(screen, snake)
 
     game_is_on = True
     try:
         while game_is_on:
             play_frame(screen, snake)
+            eat_food_if_close(snake, food, scoreboard)
         screen.exitonclick()
     except (Terminator, TclError):
         return  # the window was closed: there is nothing left to do
