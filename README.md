@@ -4,18 +4,16 @@ The classic Snake game, built object-oriented with Python's `turtle` module. It 
 the day-20 and day-21 assignment of Udemy's *100 Days of Code: The Complete Python
 Pro Bootcamp*: a snake of three square segments moves across a black 600 by 600
 screen by itself and is steered with the arrow keys, but never turns straight back
-onto itself (day 20). It eats food, grows, and a score is shown at the top (day 21);
-the game-over rules of day 21 come with the last milestone.
+onto itself (day 20). It eats food, grows, and a score is shown at the top; the game is over when the head passes the wall or touches its own tail (day 21).
 
 The game has no runtime dependencies. The code keeps the names of the lectures
 (`Snake`, `create_snake`, `move`, `up`, `down`, `left`, `right`, `segments`,
-`head`, `game_is_on`, `Food`, `Scoreboard`, `refresh`, `extend`, `increase_score`)
+`head`, `game_is_on`, `Food`, `Scoreboard`, `refresh`, `extend`, `increase_score`, `game_over`)
 so that you can compare it with your own solution.
 
-> **Status:** the snake moves by itself, is steered with the arrow keys, eats food
-> and grows, and the score is shown. There is no game over yet (wall and tail, the
-> last milestone), so the game runs until you close the window; see
-> `docs/project-plan.md`.
+> **Status:** the game is finished: the snake moves by itself, is steered with the
+> arrow keys, eats food and grows, the score is shown, and the game is over at the
+> wall or at the tail; see `docs/project-plan.md`.
 
 ## Requirements
 
@@ -96,8 +94,11 @@ to it than 15 pixels the snake eats it: the food moves to a new random place, th
 snake grows by one segment, and the score at the top of the window goes up by 1
 (`Score: 0`, `Score: 1`, ...).
 
-Close the window to end the game. Without walls (the last milestone) the snake
-leaves the window if you do not turn it.
+The game is over when the head passes the wall (more than 280 pixels from the centre
+on any side) or touches the tail (comes closer than 10 pixels to a segment behind it).
+The snake stops, the text `GAME OVER` appears in the middle of the window, the score
+stays where it is, and a click on the window closes it. You can also close the window
+with its close button at any time.
 
 ## Run the tests
 
