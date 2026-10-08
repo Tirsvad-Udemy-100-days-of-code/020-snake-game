@@ -127,9 +127,13 @@ class FakeScoreboard:
 
     def __init__(self) -> None:
         self.increases = 0
+        self.game_overs = 0
 
     def increase_score(self) -> None:
         self.increases += 1
+
+    def game_over(self) -> None:
+        self.game_overs += 1
 
 
 class FakeScreen:

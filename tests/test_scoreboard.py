@@ -58,3 +58,28 @@ def test_every_food_adds_one_to_the_score(monkeypatch: pytest.MonkeyPatch) -> No
         scoreboard.increase_score()
 
     assert scoreboard.calls[-1][1][0] == "Score: 3"
+
+
+def test_game_over_writes_the_text_at_the_centre_in_the_scoreboard_font(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scoreboard = make_scoreboard(monkeypatch)
+
+    scoreboard.game_over()
+
+    assert scoreboard.calls[-2:] == [
+        ("goto", constants.GAME_OVER_POSITION),
+        ("write", ("GAME OVER", "center", ("Arial", 24, "normal"))),
+    ]
+
+
+def test_game_over_leaves_the_score_on_the_screen(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scoreboard = make_scoreboard(monkeypatch)
+    scoreboard.increase_score()
+    calls_before = len(scoreboard.calls)
+
+    scoreboard.game_over()
+
+    assert "clear" not in scoreboard.call_names()[calls_before:]

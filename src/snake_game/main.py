@@ -3,7 +3,8 @@
 
 The flow follows the lectures "Screen Setup and Creating a Snake Body",
 "Animating the Snake Segments on Screen" and "Controlling the Snake with
-Keypresses", and the day-21 steps in which the snake eats food and the score rises.
+Keypresses", and the day-21 steps in which the snake eats food, the score rises and
+the game ends.
 """
 
 import time
@@ -85,13 +86,17 @@ class FoodLike(Protocol):
 
 
 class ScoreboardLike(Protocol):
-    """! @brief What `eat_food_if_close` needs from the scoreboard.
+    """! @brief What the eating and game-over checks need from the scoreboard.
 
     A `Scoreboard` fits this description, and so does a fake in a test.
     """
 
     def increase_score(self) -> None:
         """! @brief Add 1 to the score and write it."""
+        ...
+
+    def game_over(self) -> None:
+        """! @brief Write the game-over text."""
         ...
 
 
@@ -148,6 +153,21 @@ def eat_food_if_close(snake: Snake, food: FoodLike, scoreboard: ScoreboardLike) 
         scoreboard.increase_score()
 
 
+def end_game_if_over(snake: Snake, scoreboard: ScoreboardLike) -> bool:
+    """! @brief End the game when the head passes the wall or touches the tail.
+
+    When the game is over the scoreboard writes the game-over text.
+
+    @param snake The snake.
+    @param scoreboard The scoreboard that writes the game-over text.
+    @return True when the game is over.
+    """
+    if snake.hits_wall() or snake.hits_tail():
+        scoreboard.game_over()
+        return True
+    return False
+
+
 def main() -> None:
     """! @brief Open the game window and run the snake until the window is closed.
 
@@ -155,8 +175,9 @@ def main() -> None:
     `tkinter.TclError` ("invalid command name"), and `turtle` raises
     `turtle.Terminator` in some other calls once its window is gone. Both mean
     "the player closed the window", so the game ends quietly with exit code 0.
-    `screen.exitonclick()` after the loop waits for a click once the game is over,
-    which the day-21 rules will cause.
+    When the snake passes the wall or touches its tail the loop ends, the screen is
+    updated so that the game-over text shows, and `screen.exitonclick()` waits for a
+    click.
 
     `turtle` and `tkinter` are imported here and not at the top of the module, and
     so are `food` and `scoreboard`, whose classes inherit from `Turtle`: importing
@@ -181,6 +202,9 @@ def main() -> None:
         while game_is_on:
             play_frame(screen, snake)
             eat_food_if_close(snake, food, scoreboard)
+            if end_game_if_over(snake, scoreboard):
+                game_is_on = False
+        screen.update()
         screen.exitonclick()
     except (Terminator, TclError):
         return  # the window was closed: there is nothing left to do

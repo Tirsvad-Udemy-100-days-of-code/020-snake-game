@@ -279,3 +279,108 @@ def test_the_new_segment_follows_the_snake_and_the_body_stays_joined_when_turnin
         math.dist(places[index], places[index + 1]) for index in range(len(places) - 1)
     ]
     assert gaps == [constants.MOVE_DISTANCE] * (len(places) - 1)
+
+
+@pytest.mark.parametrize(
+    "place", [(281, 0), (-281, 0), (0, 281), (0, -281), (300, 300), (0, 1000)]
+)
+def test_the_head_has_passed_the_wall_beyond_the_limit_on_any_side(
+    place: tuple[int, int],
+) -> None:
+    snake, _ = make_snake()
+    snake.head.goto(*place)
+
+    assert snake.hits_wall()
+
+
+@pytest.mark.parametrize(
+    "place", [(0, 0), (280, 0), (-280, 0), (0, 280), (0, -280), (280, -280)]
+)
+def test_the_head_has_not_passed_the_wall_at_or_inside_the_limit(
+    place: tuple[int, int],
+) -> None:
+    snake, _ = make_snake()
+    snake.head.goto(*place)
+
+    assert not snake.hits_wall()
+
+
+@pytest.mark.parametrize("gap", [0, 5, 9])
+def test_the_head_touches_the_tail_closer_than_the_touch_distance(gap: int) -> None:
+    snake, created = make_snake()
+    created[1].goto(gap, 0)
+
+    assert snake.hits_tail()
+
+
+@pytest.mark.parametrize("gap", [10, 11, 20, 100])
+def test_the_head_does_not_touch_the_tail_at_or_beyond_the_touch_distance(
+    gap: int,
+) -> None:
+    snake, created = make_snake()
+    created[1].goto(gap, 0)
+
+    assert not snake.hits_tail()
+
+
+def test_the_head_touches_any_segment_of_a_long_tail() -> None:
+    snake, created = make_snake()
+    for index in range(3, 8):
+        extra = FakeSegment()
+        extra.goto(-20 * index, 0)
+        snake.segments.append(extra)
+        created.append(extra)
+    created[6].goto(3, 4)  # a distance of 5 from the head, far down the tail
+
+    assert snake.hits_tail()
+
+
+def test_a_new_snake_does_not_touch_its_tail() -> None:
+    snake, _ = make_snake()
+
+    assert not snake.hits_tail()
+
+
+def test_a_snake_with_only_a_head_has_no_tail_to_touch() -> None:
+    snake, created = make_snake()
+    snake.segments[:] = [created[0]]
+    created[0].goto(0, 0)
+
+    assert not snake.hits_tail()
+
+
+def test_the_new_segment_after_growing_does_not_touch_the_head() -> None:
+    snake, _ = make_snake()
+    snake.extend()
+    snake.move()
+
+    assert not snake.hits_tail()
+
+
+def test_the_snake_hits_its_tail_when_it_turns_into_it() -> None:
+    snake, created = make_snake()
+    for index in range(3, 5):  # a snake of five segments
+        extra = FakeSegment()
+        extra.goto(-20 * index, 0)
+        snake.segments.append(extra)
+        created.append(extra)
+    # Up, left and down, one move each, walk the head round a square of 20 by 20
+    # pixels and back onto the place where the fifth segment is.
+    for turn in (snake.up, snake.left, snake.down):
+        turn()
+        snake.move()
+
+    assert snake.hits_tail()
+
+
+def test_a_snake_of_four_segments_cannot_touch_its_tail_in_a_small_square() -> None:
+    snake, created = make_snake()
+    extra = FakeSegment()
+    extra.goto(-60, 0)
+    snake.segments.append(extra)
+    created.append(extra)
+    for turn in (snake.up, snake.left, snake.down):
+        turn()
+        snake.move()
+
+    assert not snake.hits_tail()

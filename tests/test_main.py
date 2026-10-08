@@ -18,6 +18,7 @@ from snake_game.main import (
     bind_keys,
     configure_screen,
     eat_food_if_close,
+    end_game_if_over,
     main,
     play_frame,
 )
@@ -242,6 +243,99 @@ def test_main_does_not_raise_the_score_when_the_food_is_far_away(
     scoreboard = turtles[4]
     assert scoreboard.calls[-1][1][0] == "Score: 0"
     assert len(turtles) == len(constants.STARTING_POSITIONS) + 2
+
+
+def test_the_game_is_not_over_while_the_snake_is_inside_and_clear_of_its_tail() -> None:
+    snake, _ = make_snake()
+    scoreboard = FakeScoreboard()
+
+    assert not end_game_if_over(snake, scoreboard)
+    assert scoreboard.game_overs == 0
+
+
+def test_the_game_is_over_when_the_head_passes_the_wall() -> None:
+    snake, _ = make_snake()
+    snake.head.goto(constants.WALL_LIMIT + 1, 0)
+    scoreboard = FakeScoreboard()
+
+    assert end_game_if_over(snake, scoreboard)
+    assert scoreboard.game_overs == 1
+
+
+def test_the_game_is_over_when_the_head_touches_the_tail() -> None:
+    snake, created = make_snake()
+    created[1].goto(3, 4)
+    scoreboard = FakeScoreboard()
+
+    assert end_game_if_over(snake, scoreboard)
+    assert scoreboard.game_overs == 1
+
+
+def test_main_ends_the_game_at_the_wall_shows_game_over_and_waits_for_a_click(
+    monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
+) -> None:
+    turtles, screens = install_fake_turtle(monkeypatch, frames_before_close=100)
+
+    main()
+
+    snake_head, scoreboard = turtles[0], turtles[4]
+    moves_to_pass_the_wall = constants.WALL_LIMIT // constants.MOVE_DISTANCE + 1
+    assert snake_head.call_names().count("forward") == moves_to_pass_the_wall
+    assert snake_head.position() == (
+        constants.MOVE_DISTANCE * moves_to_pass_the_wall,
+        0,
+    )
+    assert scoreboard.calls[-1] == (
+        "write",
+        ("GAME OVER", "center", ("Arial", 24, "normal")),
+    )
+    assert screens[0].call_names()[-2:] == ["update", "exitonclick"]
+    assert screens[0].call_names().count("exitonclick") == 1
+    assert sleeps == [constants.REFRESH_DELAY_SECONDS] * moves_to_pass_the_wall
+
+
+def test_main_ends_the_game_when_the_snake_touches_its_tail(
+    monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
+) -> None:
+    monkeypatch.setattr("snake_game.snake.Snake.hits_tail", lambda self: True)
+    turtles, screens = install_fake_turtle(monkeypatch, frames_before_close=100)
+
+    main()
+
+    assert turtles[0].call_names().count("forward") == 1
+    assert turtles[4].calls[-1][1][0] == "GAME OVER"
+    assert screens[0].call_names()[-1] == "exitonclick"
+
+
+def test_main_does_not_move_the_snake_after_game_over(
+    monkeypatch: pytest.MonkeyPatch, sleeps: list[float]
+) -> None:
+    turtles, screens = install_fake_turtle(monkeypatch, frames_before_close=100)
+
+    main()
+
+    updates = screens[0].call_names().count("update")
+    moves = turtles[0].call_names().count("forward")
+    assert updates == moves + 1  # one update per frame, and one for the last text
+
+
+@pytest.mark.parametrize("closing_error", [FakeTerminatorError, FakeTclError])
+def test_main_ends_quietly_when_the_window_is_closed_after_game_over(
+    monkeypatch: pytest.MonkeyPatch,
+    sleeps: list[float],
+    closing_error: type[Exception],
+) -> None:
+    moves_to_pass_the_wall = constants.WALL_LIMIT // constants.MOVE_DISTANCE + 1
+    turtles, screens = install_fake_turtle(
+        monkeypatch,
+        frames_before_close=moves_to_pass_the_wall,
+        closing_error=closing_error,
+    )
+
+    main()
+
+    assert turtles[4].calls[-1][1][0] == "GAME OVER"
+    assert "exitonclick" not in screens[0].call_names()
 
 
 def test_importing_the_main_module_does_not_import_turtle_or_tkinter() -> None:
