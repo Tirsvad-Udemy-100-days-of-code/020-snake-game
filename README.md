@@ -1,19 +1,21 @@
 # Snake Game
 
 The classic Snake game, built object-oriented with Python's `turtle` module. It is
-the day-20 assignment of Udemy's *100 Days of Code: The Complete Python Pro
-Bootcamp*: a snake of three square segments moves across a black 600 by 600
-screen by itself and is steered with the arrow keys, but never turns straight
-back onto itself. Food, score and game over belong to day 21 and are not part of
-this repository.
+the day-20 and day-21 assignment of Udemy's *100 Days of Code: The Complete Python
+Pro Bootcamp*: a snake of three square segments moves across a black 600 by 600
+screen by itself and is steered with the arrow keys, but never turns straight back
+onto itself (day 20). It eats food, grows, and a score is shown at the top (day 21);
+the game-over rules of day 21 come with the last milestone.
 
 The game has no runtime dependencies. The code keeps the names of the lectures
 (`Snake`, `create_snake`, `move`, `up`, `down`, `left`, `right`, `segments`,
-`head`, `game_is_on`) so that you can compare it with your own solution.
+`head`, `game_is_on`, `Food`, `Scoreboard`, `refresh`, `extend`, `increase_score`)
+so that you can compare it with your own solution.
 
-> **Status:** the day-20 game is finished: the snake moves by itself and is
-> steered with the arrow keys. There is no food, score or game over yet (day 21),
-> so the game runs until you close the window; see `docs/project-plan.md`.
+> **Status:** the snake moves by itself, is steered with the arrow keys, eats food
+> and grows, and the score is shown. There is no game over yet (wall and tail, the
+> last milestone), so the game runs until you close the window; see
+> `docs/project-plan.md`.
 
 ## Requirements
 
@@ -88,8 +90,14 @@ every 0.1 seconds.
 
 The snake never turns straight back onto itself: the arrow key opposite to the
 way it is going is ignored, even when two keys are pressed within one move.
-Close the window to end the game. Without walls (day 21) the snake leaves the
-window if you do not turn it.
+
+A small blue circle, the food, appears at a random place. When the head comes closer
+to it than 15 pixels the snake eats it: the food moves to a new random place, the
+snake grows by one segment, and the score at the top of the window goes up by 1
+(`Score: 0`, `Score: 1`, ...).
+
+Close the window to end the game. Without walls (the last milestone) the snake
+leaves the window if you do not turn it.
 
 ## Run the tests
 
@@ -142,7 +150,9 @@ The HTML is written to `build/doxygen/index.html`. A warning fails the build.
 │   ├── __init__.py
 │   ├── __main__.py            starts the game: python -m snake_game
 │   ├── constants.py           every constant of the game
+│   ├── food.py                the Food class (inherits from Turtle)
 │   ├── main.py                screen set-up and the main flow
+│   ├── scoreboard.py          the Scoreboard class (inherits from Turtle)
 │   └── snake.py               the Snake class
 ├── tests/                     pytest tests (fakes.py holds the fake turtle and screen)
 ├── Doxyfile                   source documentation settings
