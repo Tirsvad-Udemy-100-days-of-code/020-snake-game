@@ -75,3 +75,39 @@ def test_opposite_directions_differ_by_half_a_turn() -> None:
 
 def test_refresh_delay_is_a_tenth_of_a_second() -> None:
     assert constants.REFRESH_DELAY_SECONDS == 0.1
+
+
+def test_food_is_a_small_blue_circle_without_animation() -> None:
+    assert constants.FOOD_SHAPE == "circle"
+    assert constants.FOOD_SIZE == 0.5
+    assert constants.FOOD_COLOR == "blue"
+    assert constants.FOOD_SPEED == "fastest"
+
+
+def test_wall_is_inside_the_screen() -> None:
+    assert 0 < constants.WALL_LIMIT < HALF_WIDTH
+    assert constants.WALL_LIMIT < HALF_HEIGHT
+
+
+def test_wall_is_280_pixels_from_the_centre() -> None:
+    assert constants.WALL_LIMIT == 280
+
+
+def test_food_is_eaten_closer_than_15_pixels_which_is_less_than_a_move() -> None:
+    assert constants.FOOD_COLLISION_DISTANCE == 15
+    assert constants.FOOD_COLLISION_DISTANCE < constants.MOVE_DISTANCE
+
+
+def test_scoreboard_is_white_text_at_the_top_centre_inside_the_screen() -> None:
+    x, y = constants.SCOREBOARD_POSITION
+
+    assert constants.SCOREBOARD_COLOR == "white"
+    assert constants.SCOREBOARD_ALIGNMENT == "center"
+    assert (x, y) == (0, 270)
+    assert abs(x) < HALF_WIDTH
+    assert 0 < y < HALF_HEIGHT
+
+
+def test_scoreboard_text_is_score_label_and_arial_24() -> None:
+    assert constants.SCORE_LABEL == "Score: "
+    assert constants.SCOREBOARD_FONT == ("Arial", 24, "normal")
