@@ -111,3 +111,17 @@ def test_scoreboard_is_white_text_at_the_top_centre_inside_the_screen() -> None:
 def test_scoreboard_text_is_score_label_and_arial_24() -> None:
     assert constants.SCORE_LABEL == "Score: "
     assert constants.SCOREBOARD_FONT == ("Arial", 24, "normal")
+
+
+def test_tail_is_touched_closer_than_10_pixels_which_is_less_than_a_move() -> None:
+    assert constants.TAIL_COLLISION_DISTANCE == 10
+    assert 0 < constants.TAIL_COLLISION_DISTANCE < constants.MOVE_DISTANCE
+
+
+def test_game_over_text_is_written_at_the_centre_inside_the_wall() -> None:
+    x, y = constants.GAME_OVER_POSITION
+
+    assert constants.GAME_OVER_TEXT == "GAME OVER"
+    assert (x, y) == (0, 0)
+    assert abs(x) < constants.WALL_LIMIT
+    assert abs(y) < constants.WALL_LIMIT

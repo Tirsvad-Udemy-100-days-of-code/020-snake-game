@@ -87,3 +87,12 @@ SCOREBOARD_ALIGNMENT: Final[str] = "center"
 
 ## @brief Font of the scoreboard text: family, size and style.
 SCOREBOARD_FONT: Final[tuple[str, int, str]] = ("Arial", 24, "normal")
+
+## @brief The head touches the tail when it is closer to a segment than this, in pixels.
+TAIL_COLLISION_DISTANCE: Final[int] = 10
+
+## @brief Text shown when the game is over.
+GAME_OVER_TEXT: Final[str] = "GAME OVER"
+
+## @brief Where the game-over text is written: the centre of the screen.
+GAME_OVER_POSITION: Final[tuple[int, int]] = (0, 0)
