@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Task 3 names the exceptions a real window close raises (`_tkinter.TclError` and `turtle.Terminator`); task 4 and criterion 4 compare with the direction of the last move so that two key presses within one move cannot reverse the snake; task 6 lists the extra tests | pending |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Task 3 names the exceptions a real window close raises (`_tkinter.TclError` and `turtle.Terminator`); task 4 and criterion 4 compare with the direction of the last move so that two key presses within one move cannot reverse the snake; task 6 lists the extra tests | [c033c7b] |
 
 ---
 
@@ -84,3 +84,4 @@ This gate decides whether the day-20 game state is complete: the snake moves by 
 [PP-001]: ../project-plan.md
 [MIL-002]: ./mil-002-screen-and-snake-body.md
 [a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[c033c7b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/c033c7b660f8b9dcabf13d7556ef6c4e21b7d3a4

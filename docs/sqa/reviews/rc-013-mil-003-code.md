@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [0096f2f] |
 
 ---
 
@@ -76,3 +76,4 @@ Go — all Mandatory criteria pass or are not applicable, and the one Fail (crit
 [RC-007]: ./rc-007-mil-001-code.md
 [RC-009]: ./rc-009-mil-002-rereview.md
 [RC-011]: ./rc-011-mil-003-rereview.md
+[0096f2f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/0096f2f31350100013cd93f3ed13cca9c5f5d4a2

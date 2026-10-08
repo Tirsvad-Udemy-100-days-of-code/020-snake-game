@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Risk table names the exceptions that closing the window really raises (`_tkinter.TclError` or `turtle.Terminator`) | pending |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Risk table names the exceptions that closing the window really raises (`_tkinter.TclError` or `turtle.Terminator`) | [c033c7b] |
 
 ---
 
@@ -213,3 +213,4 @@ documented repository and a base for day 21.
 [PP-001]: ./project-plan.md
 [MIL-003]: ./milestones/mil-003-movement-and-keys.md
 [a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[c033c7b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/c033c7b660f8b9dcabf13d7556ef6c4e21b7d3a4

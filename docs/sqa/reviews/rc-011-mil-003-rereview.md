@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [c033c7b] |
 
 ---
 
@@ -65,3 +65,4 @@ Go — all Mandatory criteria pass. The rows above were assessed on 2026-10-08 b
 [QC-LANG-001]: ../../../framework/qc/qc-language-domain.md
 [RC-006]: ./rc-006-mil-003.md
 [DICT-001]: ../../dictionary.md
+[c033c7b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/c033c7b660f8b9dcabf13d7556ef6c4e21b7d3a4
