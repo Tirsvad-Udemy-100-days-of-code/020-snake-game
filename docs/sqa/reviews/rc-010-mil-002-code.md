@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [d60ceba] |
 
 ---
 
@@ -68,3 +68,4 @@ Go — all Mandatory criteria pass or are not applicable, and the one Fail (crit
 [QC-PY-001]: ../../../framework/qc/qc-programming-python.md
 [RC-007]: ./rc-007-mil-001-code.md
 [RC-009]: ./rc-009-mil-002-rereview.md
+[d60ceba]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/d60cebaeff4cbb5d54c080429b4a77661befce8f

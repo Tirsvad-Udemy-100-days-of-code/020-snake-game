@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Recorded that the `Snake` class has no Design Class Diagram and traces to the lecture (Traceability) | pending |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Recorded that the `Snake` class has no Design Class Diagram and traces to the lecture (Traceability) | [f48b811] |
 
 ---
 
@@ -78,3 +78,4 @@ This gate decides whether the first lecture and the class part of the third are 
 [MIL-001]: ./mil-001-project-foundation.md
 [RC-007]: ../sqa/reviews/rc-007-mil-001-code.md
 [a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[f48b811]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/f48b8111bbdfb042d86633995b01e7b52a3e118b
