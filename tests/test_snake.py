@@ -1,22 +1,41 @@
-"""Tests of the snake body, with fakes instead of real turtles."""
+"""Tests of the snake, with fakes instead of real turtles."""
 
 import pytest
 
-from fakes import FakeSegment, imports_turtle, install_fake_turtle
+from fakes import (
+    FakeSegment,
+    imports_turtle_or_tkinter,
+    install_fake_turtle,
+    make_snake,
+)
 from snake_game import constants
 from snake_game.snake import Snake
 
+DIRECTIONS = {
+    "up": constants.UP,
+    "down": constants.DOWN,
+    "left": constants.LEFT,
+    "right": constants.RIGHT,
+}
+OPPOSITE = {
+    constants.UP: constants.DOWN,
+    constants.DOWN: constants.UP,
+    constants.LEFT: constants.RIGHT,
+    constants.RIGHT: constants.LEFT,
+}
 
-def make_snake() -> tuple[Snake, list[FakeSegment]]:
-    """Make a snake whose segments are fakes, and return the fakes too."""
-    created: list[FakeSegment] = []
 
-    def factory() -> FakeSegment:
-        segment = FakeSegment()
-        created.append(segment)
-        return segment
+def positions(segments: list[FakeSegment]) -> list[tuple[float, float]]:
+    """Return where every segment is, head first."""
+    return [segment.position() for segment in segments]
 
-    return Snake(segment_factory=factory), created
+
+def make_snake_moving(direction: int) -> tuple[Snake, list[FakeSegment]]:
+    """Make a snake whose last move went in the given direction."""
+    snake, created = make_snake()
+    created[0].setheading(direction)
+    snake.move()
+    return snake, created
 
 
 def test_snake_has_one_segment_per_starting_position() -> None:
@@ -42,10 +61,8 @@ def test_segments_are_white_squares() -> None:
 def test_segments_are_placed_at_the_starting_positions_head_first() -> None:
     _, created = make_snake()
 
-    positions = [segment.calls[-1] for segment in created]
-
-    assert positions == [
-        ("goto", position) for position in constants.STARTING_POSITIONS
+    assert positions(created) == [
+        (float(x), float(y)) for x, y in constants.STARTING_POSITIONS
     ]
 
 
@@ -75,5 +92,129 @@ def test_default_segment_factory_makes_turtles(monkeypatch: pytest.MonkeyPatch) 
     assert len(turtles) == len(constants.STARTING_POSITIONS)
 
 
-def test_importing_the_snake_module_does_not_import_turtle() -> None:
-    assert not imports_turtle("snake_game.snake")
+def test_importing_the_snake_module_does_not_import_turtle_or_tkinter() -> None:
+    assert not imports_turtle_or_tkinter("snake_game.snake")
+
+
+def test_head_is_the_first_segment() -> None:
+    snake, created = make_snake()
+
+    assert snake.head is created[0]
+
+
+def test_snake_starts_moving_to_the_right() -> None:
+    snake, _ = make_snake()
+
+    assert snake.head.heading() == constants.RIGHT
+
+
+def test_move_goes_forward_by_the_move_distance() -> None:
+    snake, created = make_snake()
+
+    snake.move()
+
+    assert ("forward", (constants.MOVE_DISTANCE,)) in created[0].calls
+    assert created[0].position() == (constants.MOVE_DISTANCE, 0)
+
+
+def test_move_takes_each_segment_to_the_place_of_the_one_before_it() -> None:
+    snake, created = make_snake()
+
+    snake.move()
+
+    assert positions(created) == [(20, 0), (0, 0), (-20, 0)]
+
+
+def test_move_keeps_the_segments_joined_while_turning() -> None:
+    snake, created = make_snake()
+
+    snake.up()
+    snake.move()
+    snake.move()
+
+    assert positions(created) == [(0, 40), (0, 20), (0, 0)]
+
+
+def test_move_works_for_any_number_of_segments() -> None:
+    snake, created = make_snake()
+    for index in range(3, 6):
+        extra = FakeSegment()
+        extra.goto(-20 * index, 0)
+        snake.segments.append(extra)
+        created.append(extra)
+
+    snake.move()
+
+    assert positions(created) == [
+        (20, 0),
+        (0, 0),
+        (-20, 0),
+        (-40, 0),
+        (-60, 0),
+        (-80, 0),
+    ]
+
+
+@pytest.mark.parametrize("travel", list(OPPOSITE))
+@pytest.mark.parametrize("method", list(DIRECTIONS))
+def test_every_turn_is_accepted_unless_it_is_a_reversal(
+    method: str, travel: int
+) -> None:
+    snake, _ = make_snake_moving(travel)
+
+    getattr(snake, method)()
+
+    wanted = DIRECTIONS[method]
+    is_reversal = wanted == OPPOSITE[travel]
+    assert snake.head.heading() == (travel if is_reversal else wanted)
+
+
+def test_up_sets_the_head_to_90_degrees() -> None:
+    snake, _ = make_snake()
+
+    snake.up()
+
+    assert snake.head.heading() == 90
+
+
+def test_down_sets_the_head_to_270_degrees() -> None:
+    snake, _ = make_snake()
+
+    snake.down()
+
+    assert snake.head.heading() == 270
+
+
+def test_right_keeps_the_head_at_0_degrees() -> None:
+    snake, _ = make_snake()
+
+    snake.right()
+
+    assert snake.head.heading() == 0
+
+
+def test_left_is_ignored_while_moving_right() -> None:
+    snake, _ = make_snake()
+
+    snake.left()
+
+    assert snake.head.heading() == 0
+
+
+def test_two_key_presses_within_one_move_do_not_reverse_the_snake() -> None:
+    snake, _ = make_snake()
+
+    snake.up()
+    snake.left()
+
+    assert snake.head.heading() == constants.UP
+
+
+def test_a_turn_is_accepted_after_the_move_that_followed_the_first_turn() -> None:
+    snake, _ = make_snake()
+
+    snake.up()
+    snake.move()
+    snake.left()
+
+    assert snake.head.heading() == constants.LEFT
