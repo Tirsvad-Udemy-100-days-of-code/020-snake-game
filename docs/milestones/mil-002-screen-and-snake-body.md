@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
+| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Recorded that the `Snake` class has no Design Class Diagram and traces to the lecture (Traceability) | [f48b811] |
 
 ---
 
@@ -48,6 +49,7 @@ This gate decides whether the first lecture and the class part of the third are 
 | Objective 1: window and three-segment snake as in the lectures | [BC-001], criterion 1 in Success Criteria |
 | Objective 2: the assignment's structure and names | [BC-001], criterion 6 in Success Criteria |
 | Objective 4: tests without a display | [BC-001], criterion 2 in Success Criteria |
+| Design of the `Snake` class: no Design Class Diagram exists in this project and none is wanted for a learning project of this size. The class traces to the lecture "Create a Snake Class & Move to OOP" and to tasks 1 and 2 below. This is a recorded deviation from `QC-PY-001` criterion 10 | [RC-007] action item, S01 asked to start this milestone without asking for a diagram |
 
 ## Ownership
 
@@ -74,4 +76,6 @@ This gate decides whether the first lecture and the class part of the third are 
 [BC-001]: ../business-case.md
 [PP-001]: ../project-plan.md
 [MIL-001]: ./mil-001-project-foundation.md
+[RC-007]: ../sqa/reviews/rc-007-mil-001-code.md
 [a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[f48b811]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/f48b8111bbdfb042d86633995b01e7b52a3e118b

@@ -11,15 +11,15 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
+| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Purpose covers days 20 and 21; two concerns for the day-21 rules and the day-21 names; the README is completed in MIL-005 | [710784f] |
 
 ---
 
 ## Purpose
 
 This analysis names the people and groups who have a stake in the Snake Game
-project, a solution to the four day-20 lectures of Udemy's *100 Days of Code:
-The Complete Python Pro Bootcamp*, and classifies each one on a power/interest
+project, a solution to the day-20 and day-21 assignments of Udemy's *100 Days of Code: The Complete Python Pro Bootcamp*, and classifies each one on a power/interest
 grid so the project knows how closely to involve them. The stakeholder IDs
 (`S01` to `S03`) are the IDs every other artifact uses for owners, reviewers and
 RACI (Responsible, Accountable, Consulted, Informed) assignments. The method is
@@ -60,9 +60,11 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 | ID | Concern | FURPS+ attribute |
 | --- | --- | --- |
 | S01 | The game state behaves as the four lectures describe: a three-segment snake that moves by itself and turns with the arrow keys, without a reversal | Functionality |
+| S01 | Food, score and game over behave as the day-21 outline describes: the snake eats food and grows, the score rises, and the game ends at the wall or at its own tail | Functionality |
 | S01 | Behaviour is proven by tests that run without a display | Reliability |
 | S01 | Every step is a branch and a pull request, reviewed before the next | Supportability |
 | S02 | The code is readable and keeps the assignment's names (`Snake`, `create_snake`, `move`, `up`, `down`, `left`, `right`, `segments`, `head`, `game_is_on`) | Usability |
+| S02 | The code keeps the assignment's names for day 21 too (`Food`, `Scoreboard`, `refresh`, `extend`, `increase_score`, `game_over`) | Usability |
 | S02 | The README tells how to create the `.venv`, run the game and run the tests on their operating system | Usability |
 | S03 | The repository page says what the project is, with description, topics and README | Usability |
 | S03 | Nothing must be installed to run the game apart from Python itself | Implementation (constraint) |
@@ -72,8 +74,8 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 | ID | Channel | Frequency | Deliverable | Phase / Milestone |
 | --- | --- | --- | --- | --- |
 | S01 | Pull request review in the git host | Once per milestone | Pull request with `Closes #N` lines and the review record | Every milestone ([PP-001]) |
-| S02 | README in the repository | Once, updated when the game changes | Set-up, run and test instructions per operating system | [MIL-001], completed in [MIL-003] |
-| S03 | Repository description, topics and README | Once, updated when the game changes | Description, topics and README overview | [MIL-001], checked in [MIL-003] |
+| S02 | README in the repository | Once, updated when the game changes | Set-up, run and test instructions per operating system | [MIL-001], completed in [MIL-005] |
+| S03 | Repository description, topics and README | Once, updated when the game changes | Description, topics and README overview | [MIL-001], checked in [MIL-005] |
 
 ## Conflicting Interests and Mitigations
 
@@ -90,9 +92,10 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 | Stakeholder | Concern | Business Case objective |
 | --- | --- | --- |
 | S01 | Game state behaves as the lectures describe | [BC-001] objective 1 |
+| S01 | Food, score and game over behave as the outline describes | [BC-001] objectives 8 and 9 |
 | S01 | Tests run without a display | [BC-001] objective 4 |
 | S01 | Every step is a branch and a pull request | [BC-001] objective 6 |
-| S02 | Readable code with the assignment's names | [BC-001] objective 2 |
+| S02 | Readable code with the assignment's names | [BC-001] objectives 2, 8 and 9 |
 | S02 | README with run and test instructions | [BC-001] objectives 3 and 5 |
 | S03 | Description, topics and README on the repository page | [BC-001] objective 7 |
 | S03 | No runtime dependencies | [BC-001] objective 3 |
@@ -108,5 +111,6 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 [BC-001]: ./business-case.md
 [PP-001]: ./project-plan.md
 [MIL-001]: ./milestones/mil-001-project-foundation.md
-[MIL-003]: ./milestones/mil-003-movement-and-keys.md
+[MIL-005]: ./milestones/mil-005-game-over.md
 [a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[710784f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/710784f2243e7ecf8cec23cbdd9cc58c96cdff96

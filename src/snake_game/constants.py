@@ -52,3 +52,47 @@ RIGHT: Final[int] = 0
 
 ## @brief Wait in seconds between two moves.
 REFRESH_DELAY_SECONDS: Final[float] = 0.1
+
+## @brief Shape of the food.
+FOOD_SHAPE: Final[str] = "circle"
+
+## @brief Stretch factor of the food in both directions; 0.5 is half a default turtle.
+FOOD_SIZE: Final[float] = 0.5
+
+## @brief Colour of the food.
+FOOD_COLOR: Final[str] = "blue"
+
+## @brief Speed of the food; `fastest` switches its animation off.
+FOOD_SPEED: Final[str] = "fastest"
+
+## @brief How far from the centre the wall is, on every side, in pixels.
+#
+#  The head must stay inside it, and the food is shown inside it.
+WALL_LIMIT: Final[int] = 280
+
+## @brief The snake eats the food when the head is closer to it than this, in pixels.
+FOOD_COLLISION_DISTANCE: Final[int] = 15
+
+## @brief Text in front of the score on the scoreboard.
+SCORE_LABEL: Final[str] = "Score: "
+
+## @brief Colour of the scoreboard text.
+SCOREBOARD_COLOR: Final[str] = "white"
+
+## @brief Where the scoreboard text is written: the top centre of the screen.
+SCOREBOARD_POSITION: Final[tuple[int, int]] = (0, 270)
+
+## @brief Alignment of the scoreboard text around its position.
+SCOREBOARD_ALIGNMENT: Final[str] = "center"
+
+## @brief Font of the scoreboard text: family, size and style.
+SCOREBOARD_FONT: Final[tuple[str, int, str]] = ("Arial", 24, "normal")
+
+## @brief The head touches the tail when it is closer to a segment than this, in pixels.
+TAIL_COLLISION_DISTANCE: Final[int] = 10
+
+## @brief Text shown when the game is over.
+GAME_OVER_TEXT: Final[str] = "GAME OVER"
+
+## @brief Where the game-over text is written: the centre of the screen.
+GAME_OVER_POSITION: Final[tuple[int, int]] = (0, 0)
