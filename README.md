@@ -11,10 +11,9 @@ The game has no runtime dependencies. The code keeps the names of the lectures
 (`Snake`, `create_snake`, `move`, `up`, `down`, `left`, `right`, `segments`,
 `head`, `game_is_on`) so that you can compare it with your own solution.
 
-> **Status:** under construction. The project foundation (this README, the
-> configuration, `constants.py` and the tests of the constants) is in place. The
-> window and the snake are added in the next milestone and the movement and keys
-> in the last one; see `docs/project-plan.md`.
+> **Status:** under construction. The project foundation, the window and the
+> snake body are in place. The snake does not move yet: the movement and the
+> arrow keys are added in the last milestone; see `docs/project-plan.md`.
 
 ## Requirements
 
@@ -79,8 +78,10 @@ With the virtual environment active:
 python -m snake_game
 ```
 
-This command works once the game is finished (see the status above). The arrow
-keys steer the snake; click the window to close it.
+It opens a black 600 by 600 window titled "My Snake Game" with the snake of
+three white squares in the middle. Click the window to close it. The snake does
+not move yet, and the arrow keys have no effect until the last milestone (see the
+status above).
 
 ## Run the tests
 
@@ -131,8 +132,11 @@ The HTML is written to `build/doxygen/index.html`. A warning fails the build.
 ├── docs/                      business case, plan, milestones, reviews
 ├── src/snake_game/            the game
 │   ├── __init__.py
-│   └── constants.py           every constant of the game
-├── tests/                     pytest tests
+│   ├── __main__.py            starts the game: python -m snake_game
+│   ├── constants.py           every constant of the game
+│   ├── main.py                screen set-up and the main flow
+│   └── snake.py               the Snake class
+├── tests/                     pytest tests (fakes.py holds the fake turtle and screen)
 ├── Doxyfile                   source documentation settings
 ├── LICENSE
 ├── pyproject.toml             project configuration
