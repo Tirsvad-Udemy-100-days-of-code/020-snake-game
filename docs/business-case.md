@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
+| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Risk table names the exceptions that closing the window really raises (`_tkinter.TclError` or `turtle.Terminator`) | pending |
 
 ---
 
@@ -150,7 +151,7 @@ the framework's rule that planning, review and code stay in step.
 | Debian 12 ships Python 3.11, below the required 3.13 | Linux set-up fails | README states Debian 13 or newer, or a separately installed Python 3.13 |
 | A turtle window cannot be opened in continuous integration | The tests cannot cover the game | `Snake` receives its segment factory as a parameter, so tests pass fakes; only `main` opens a window |
 | The git host has no Actions runner | The continuous integration workflow is never executed | Provide the workflow file and run the same commands locally; recorded as an open issue of [PP-001] |
-| Closing the window during the animation loop raises a `turtle.Terminator` traceback | The game looks broken when it is quit | [MIL-003] requires a clean exit when the window is closed |
+| Closing the window during the animation loop ends in a traceback (`_tkinter.TclError` or `turtle.Terminator`) | The game looks broken when it is quit | [MIL-003] requires a clean exit when the window is closed |
 | Author and reviewer are the same person (S01) | A defect can pass review unnoticed | Review against the QC checklists, record each review as an `RC-*`, and let the pull request be the second look |
 | The lectures are available only as the summaries in the request | The game differs from the video | S01 compares the finished game with the video at the [MIL-003] Go/No-Go |
 | Tokens in `.env` leak into the repository | Credentials exposed | `.env` is in `.gitignore`, is never imported, and is not part of any task |
