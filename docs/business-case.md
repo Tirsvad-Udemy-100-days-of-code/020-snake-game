@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Risk table names the exceptions that closing the window really raises (`_tkinter.TclError` or `turtle.Terminator`) | [c033c7b] |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Added day 21 to the scope as phase 2: objectives 8 and 9, scope, success criteria 9 and 10, three risks, an assumption, the constraint (two phases, 2026-10-21), costs and recommendation | pending |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Added day 21 to the scope as phase 2: objectives 8 and 9, scope, success criteria 9 and 10, three risks, an assumption, the constraint (two phases, 2026-10-21), costs and recommendation | [710784f] |
 
 ---
 
@@ -199,3 +199,4 @@ Proceed — the scope is small (days 20 and 21 of one game), the cost is two wee
 [MIL-004]: ./milestones/mil-004-food-and-score.md
 [MIL-005]: ./milestones/mil-005-game-over.md
 [c033c7b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/c033c7b660f8b9dcabf13d7556ef6c4e21b7d3a4
+[710784f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/710784f2243e7ecf8cec23cbdd9cc58c96cdff96

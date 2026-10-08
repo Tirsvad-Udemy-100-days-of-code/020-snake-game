@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Task 7 has its own title, because the sync matches issues by title and the old title was also the title of task 7 of MIL-003 | pending |
+| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [710784f] |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Task 7 has its own title, because the sync matches issues by title and the old title was also the title of task 7 of MIL-003 | [710784f] |
 
 ---
 
@@ -102,3 +102,4 @@ The numbers below are **assumptions** (see [MIL-004]); S01 confirms or replaces 
 [MIL-002]: ./mil-002-screen-and-snake-body.md
 [MIL-003]: ./mil-003-movement-and-keys.md
 [MIL-004]: ./mil-004-food-and-score.md
+[710784f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/710784f2243e7ecf8cec23cbdd9cc58c96cdff96

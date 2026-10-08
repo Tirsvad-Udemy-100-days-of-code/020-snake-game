@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Closed the GitHub viewers open issue on S01's decision: a git host workflow sets the GitHub copy's description and topics | [a2c997e] |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Added phase 2 (day 21): MIL-004 and MIL-005, schedule to 2026-10-21, scope coverage, dependencies, a risk and five open issues | pending |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Added phase 2 (day 21): MIL-004 and MIL-005, schedule to 2026-10-21, scope coverage, dependencies, a risk and five open issues | [710784f] |
 
 ---
 
@@ -154,3 +154,4 @@ the same number of days; the two buffer days of each phase absorb up to two days
 [milestone-85]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/milestone/85
 [milestone-86]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/milestone/86
 [a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[710784f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/710784f2243e7ecf8cec23cbdd9cc58c96cdff96

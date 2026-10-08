@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [710784f] |
 
 ---
 
@@ -67,3 +67,4 @@ Go — all Mandatory criteria pass or are not applicable. The rows above were as
 [BC-001]: ../../business-case.md
 [PP-001]: ../../project-plan.md
 [RC-003]: ./rc-003-dictionary.md
+[710784f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/710784f2243e7ecf8cec23cbdd9cc58c96cdff96

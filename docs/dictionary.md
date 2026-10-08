@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Added the day-21 terms (food, eat, grow, score, scoreboard, wall, touch, game over); tail now means every segment behind the head | pending |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Added the day-21 terms (food, eat, grow, score, scoreboard, wall, touch, game over); tail now means every segment behind the head | [710784f] |
 
 ---
 
@@ -73,3 +73,4 @@ that S02 can find the lectures' names in the code.
 [BC-001]: ./business-case.md
 [SA-001]: ./stakeholder-analysis.md
 [a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[710784f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/710784f2243e7ecf8cec23cbdd9cc58c96cdff96

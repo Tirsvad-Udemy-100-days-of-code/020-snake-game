@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Purpose covers days 20 and 21; two concerns for the day-21 rules and the day-21 names; the README is completed in MIL-005 | pending |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Purpose covers days 20 and 21; two concerns for the day-21 rules and the day-21 names; the README is completed in MIL-005 | [710784f] |
 
 ---
 
@@ -113,3 +113,4 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 [MIL-001]: ./milestones/mil-001-project-foundation.md
 [MIL-005]: ./milestones/mil-005-game-over.md
 [a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[710784f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/710784f2243e7ecf8cec23cbdd9cc58c96cdff96
