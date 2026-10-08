@@ -10,6 +10,8 @@ module first.
 from turtle import Turtle
 
 from snake_game.constants import (
+    GAME_OVER_POSITION,
+    GAME_OVER_TEXT,
     SCORE_LABEL,
     SCOREBOARD_ALIGNMENT,
     SCOREBOARD_COLOR,
@@ -45,3 +47,12 @@ class Scoreboard(Turtle):
         """! @brief Add 1 to the score and write it."""
         self.score += 1
         self.update_scoreboard()
+
+    def game_over(self) -> None:
+        """! @brief Write the game-over text at the centre of the screen.
+
+        The score stays where it is: the old text is not wiped. Automatic drawing is
+        off in the game, so the screen must be updated after this call.
+        """
+        self.goto(GAME_OVER_POSITION)
+        self.write(GAME_OVER_TEXT, align=SCOREBOARD_ALIGNMENT, font=SCOREBOARD_FONT)
