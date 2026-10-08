@@ -3,9 +3,9 @@
 
 The class follows the lectures "Create a Snake Class & Move to OOP", "Animating
 the Snake Segments on Screen" and "Controlling the Snake with Keypresses", and
-the day-21 step in which the snake grows. It keeps the lectures' names: `Snake`,
-`segments`, `create_snake`, `add_segment`, `extend`, `move`, `head`, `up`, `down`,
-`left` and `right`. The only differences are that the snake gets
+the day-21 steps in which the snake grows and the game ends. It keeps the lectures'
+names: `Snake`, `segments`, `create_snake`, `add_segment`, `extend`, `move`, `head`,
+`up`, `down`, `left` and `right`. The only differences are that the snake gets
 the function that makes a segment as a parameter, so that a test can pass a fake
 and needs no window, and how a reversal is refused (see Snake).
 """
@@ -21,7 +21,9 @@ from snake_game.constants import (
     SEGMENT_COLOR,
     SEGMENT_SHAPE,
     STARTING_POSITIONS,
+    TAIL_COLLISION_DISTANCE,
     UP,
+    WALL_LIMIT,
 )
 
 
@@ -192,6 +194,29 @@ class Snake:
             self.segments[index].goto(ahead.xcor(), ahead.ycor())
         self.head.forward(MOVE_DISTANCE)
         self._direction_of_travel = self.head.heading()
+
+    def hits_wall(self) -> bool:
+        """! @brief Tell whether the head has passed the wall on any side.
+
+        The head is outside when its x or its y is beyond `WALL_LIMIT`.
+
+        @return True when the head is outside the wall.
+        """
+        return abs(self.head.xcor()) > WALL_LIMIT or abs(self.head.ycor()) > WALL_LIMIT
+
+    def hits_tail(self) -> bool:
+        """! @brief Tell whether the head touches the tail.
+
+        The tail is every segment behind the head (a slice, `segments[1:]`). The head
+        touches it when it is closer than `TAIL_COLLISION_DISTANCE` to one of them.
+        A snake that has only a head has no tail to touch.
+
+        @return True when the head touches a segment of the tail.
+        """
+        return any(
+            self.head.distance(segment.position()) < TAIL_COLLISION_DISTANCE
+            for segment in self.segments[1:]
+        )
 
     def up(self) -> None:
         """! @brief Turn the head up, unless the snake is moving down."""
