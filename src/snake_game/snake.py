@@ -1,16 +1,27 @@
 """! @file
-@brief The snake: a list of square segments that the game draws.
+@brief The snake: a list of square segments that the game draws and moves.
 
-The class follows the lecture "Create a Snake Class & Move to OOP". It keeps the
-lecture's names: `Snake`, `segments` and `create_snake`. The only difference is
-that the snake gets the function that makes a segment as a parameter, so that a
-test can pass a fake and needs no window.
+The class follows the lectures "Create a Snake Class & Move to OOP", "Animating
+the Snake Segments on Screen" and "Controlling the Snake with Keypresses". It
+keeps the lectures' names: `Snake`, `segments`, `create_snake`, `move`, `head`,
+`up`, `down`, `left` and `right`. The only differences are that the snake gets
+the function that makes a segment as a parameter, so that a test can pass a fake
+and needs no window, and how a reversal is refused (see Snake).
 """
 
 from collections.abc import Callable
 from typing import Protocol
 
-from snake_game.constants import SEGMENT_COLOR, SEGMENT_SHAPE, STARTING_POSITIONS
+from snake_game.constants import (
+    DOWN,
+    LEFT,
+    MOVE_DISTANCE,
+    RIGHT,
+    SEGMENT_COLOR,
+    SEGMENT_SHAPE,
+    STARTING_POSITIONS,
+    UP,
+)
 
 
 class Segment(Protocol):
@@ -47,6 +58,41 @@ class Segment(Protocol):
         """
         ...
 
+    def xcor(self) -> float:
+        """! @brief Tell the x coordinate of the segment.
+
+        @return The x coordinate.
+        """
+        ...
+
+    def ycor(self) -> float:
+        """! @brief Tell the y coordinate of the segment.
+
+        @return The y coordinate.
+        """
+        ...
+
+    def forward(self, distance: float, /) -> None:
+        """! @brief Move the segment forward, in the direction it points.
+
+        @param distance How far to move, in pixels.
+        """
+        ...
+
+    def heading(self) -> float:
+        """! @brief Tell the direction the segment points, in degrees.
+
+        @return The heading, 0 for right and growing counter-clockwise.
+        """
+        ...
+
+    def setheading(self, to_angle: float, /) -> None:
+        """! @brief Turn the segment to point in a direction.
+
+        @param to_angle The heading in degrees.
+        """
+        ...
+
 
 def make_turtle_segment() -> Segment:
     """! @brief Make a real turtle, the default way to get a segment.
@@ -62,7 +108,14 @@ def make_turtle_segment() -> Segment:
 
 
 class Snake:
-    """! @brief The snake of the game, drawn as a row of square segments."""
+    """! @brief The snake of the game, drawn as a row of square segments.
+
+    The snake cannot reverse onto itself. Like the lecture, a turn is refused when
+    it points opposite to the way the snake is going. Unlike the lecture, "the way
+    the snake is going" is the direction of its last move and not the current
+    direction of the head: otherwise two key presses within one move (Up then Left
+    while moving right) would turn the head twice and reverse the snake.
+    """
 
     def __init__(self, segment_factory: Callable[[], Segment] | None = None) -> None:
         """! @brief Create the snake with its three starting segments.
@@ -74,6 +127,10 @@ class Snake:
         ## @brief The segments of the snake, the head first.
         self.segments: list[Segment] = []
         self.create_snake()
+        ## @brief The first segment, which leads the snake.
+        self.head: Segment = self.segments[0]
+        ## @brief The direction of the last move; a turn against it is refused.
+        self._direction_of_travel: float = self.head.heading()
 
     def create_snake(self) -> None:
         """! @brief Draw one white square segment at each starting position.
@@ -88,3 +145,37 @@ class Snake:
             new_segment.penup()
             new_segment.goto(x, y)
             self.segments.append(new_segment)
+
+    def move(self) -> None:
+        """! @brief Move the snake one step along its path.
+
+        Each segment, from the last to the second, goes to the place of the
+        segment before it; then the head goes forward by `MOVE_DISTANCE`. Moving
+        the tail first keeps the body joined while turning, however many segments
+        there are.
+        """
+        for index in range(len(self.segments) - 1, 0, -1):
+            ahead = self.segments[index - 1]
+            self.segments[index].goto(ahead.xcor(), ahead.ycor())
+        self.head.forward(MOVE_DISTANCE)
+        self._direction_of_travel = self.head.heading()
+
+    def up(self) -> None:
+        """! @brief Turn the head up, unless the snake is moving down."""
+        if self._direction_of_travel != DOWN:
+            self.head.setheading(UP)
+
+    def down(self) -> None:
+        """! @brief Turn the head down, unless the snake is moving up."""
+        if self._direction_of_travel != UP:
+            self.head.setheading(DOWN)
+
+    def left(self) -> None:
+        """! @brief Turn the head left, unless the snake is moving right."""
+        if self._direction_of_travel != RIGHT:
+            self.head.setheading(LEFT)
+
+    def right(self) -> None:
+        """! @brief Turn the head right, unless the snake is moving left."""
+        if self._direction_of_travel != LEFT:
+            self.head.setheading(RIGHT)
