@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Moved the CI workflow from `.github/workflows` to `.gitea/workflows` (task 6, deliverable, criterion 8) so that the push mirror to GitHub is not blocked | pending |
+| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Moved the CI workflow from `.github/workflows` to `.gitea/workflows` (task 6, deliverable, criterion 8) so that the push mirror to GitHub is not blocked | [a2c997e] |
 
 ---
 
@@ -82,3 +82,4 @@ The repository files that carry no game logic yet: `pyproject.toml`, the Python 
 
 [BC-001]: ../business-case.md
 [PP-001]: ../project-plan.md
+[a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752

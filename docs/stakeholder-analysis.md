@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
 
 ---
 
@@ -109,3 +109,4 @@ FURPS+ stands for Functionality, Usability, Reliability, Performance, Supportabi
 [PP-001]: ./project-plan.md
 [MIL-001]: ./milestones/mil-001-project-foundation.md
 [MIL-003]: ./milestones/mil-003-movement-and-keys.md
+[a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752

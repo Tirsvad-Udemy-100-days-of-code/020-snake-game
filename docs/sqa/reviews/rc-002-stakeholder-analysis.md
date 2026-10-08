@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
 
 ---
 
@@ -68,3 +68,4 @@ Go — all Mandatory criteria pass. The checklist rows above were transcribed an
 [BC-001]: ../../business-case.md
 [PP-001]: ../../project-plan.md
 [DICT-001]: ../../dictionary.md
+[a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752

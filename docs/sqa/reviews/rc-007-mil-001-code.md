@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | pending |
+| 2026-10-08 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
 
 ---
 
@@ -72,3 +72,4 @@ Go — all Mandatory criteria pass or are not applicable, and the one Fail (crit
 [MIL-002]: ../../milestones/mil-002-screen-and-snake-body.md
 [PP-001]: ../../project-plan.md
 [QC-PY-001]: ../../../framework/qc/qc-programming-python.md
+[a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752

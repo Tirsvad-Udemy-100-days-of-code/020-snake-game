@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Closed the GitHub viewers open issue on S01's decision: a git host workflow sets the GitHub copy's description and topics | pending |
+| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Closed the GitHub viewers open issue on S01's decision: a git host workflow sets the GitHub copy's description and topics | [a2c997e] |
 
 ---
 
@@ -144,3 +144,4 @@ before the end date of 2026-10-15 moves.
 [milestone-82]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/milestone/82
 [milestone-83]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/milestone/83
 [milestone-84]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/milestone/84
+[a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
