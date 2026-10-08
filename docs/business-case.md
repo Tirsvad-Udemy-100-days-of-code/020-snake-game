@@ -11,25 +11,17 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [a2c997e] |
-| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Risk table names the exceptions that closing the window really raises (`_tkinter.TclError` or `turtle.Terminator`) | [c033c7b] |
+| 2026-10-08 | Deprecated | Jens Tirsvad Nielsen | S01 | Risk table names the exceptions that closing the window really raises (`_tkinter.TclError` or `turtle.Terminator`) | [c033c7b] |
+| 2026-10-08 | Accepted | Jens Tirsvad Nielsen | S01 | Added day 21 to the scope as phase 2: objectives 8 and 9, scope, success criteria 9 and 10, three risks, an assumption, the constraint (two phases, 2026-10-21), costs and recommendation | pending |
 
 ---
 
 ## Executive Summary
 
-Snake Game is the day-20 assignment of Udemy's *100 Days of Code: The Complete
-Python Pro Bootcamp*: the first half of the classic Snake game, built in an
-object-oriented way with Python's `turtle` module. Four lectures lead from an
-empty window to a three-segment snake that moves by itself and is steered with
-the arrow keys. The course leaves the result as loose code in the lecture
-videos. This project turns it into a small, finished repository: a `Snake`
+Snake Game is the day-20 and day-21 assignment of Udemy's *100 Days of Code: The Complete Python Pro Bootcamp*: the classic Snake game, built in an object-oriented way with Python's `turtle` module. Day 20 leads in four lectures from an empty window to a three-segment snake that moves by itself and is steered with the arrow keys; day 21 adds food, a score and the game-over rules. The course leaves the result as loose code in the lecture videos. This project turns it into a small, finished repository: a `Snake`
 class that follows the lectures, tests that run without a display, source
 documentation, and a README that lets another course participant create a
-virtual environment and run everything. It has no runtime dependencies and is
-planned in three milestones, each delivered by one branch and one pull request.
-The second half of the game (food, score and game over, day 21) is not part of
-this project.
+virtual environment and run everything. It has no runtime dependencies and is planned in five milestones, each delivered by one branch and one pull request: three for day 20 and two for day 21, which were added to the plan on 2026-10-08.
 
 ## Methodological and Standards Foundation
 
@@ -43,16 +35,11 @@ this project.
 - **Code:** Python Enhancement Proposals (PEP) 8, 257 and 484, reviewed against `QC-PY-001`; comments
   in Doxygen style; tests with pytest.
 - **Domain terms:** the lectures' own terms and names are used and recorded in
-  the Domain Dictionary [DICT-001] (screen, snake, segment, head, body, move,
-  direction, reversal, and the names `create_snake`, `up`, `down`, `left`,
-  `right`, `game_is_on`).
+  the Domain Dictionary [DICT-001] (screen, snake, segment, head, body, tail, move, direction, reversal, food, eat, grow, score, scoreboard, wall, touch, game over, and the names `create_snake`, `up`, `down`, `left`, `right`, `game_is_on`, `Food`, `Scoreboard`).
 
 ## Problem Statement
 
-- The course shows the code only inside lecture videos, and the lectures change
-  the same code four times (loose script, list of segments, `Snake` class,
-  key bindings). Nobody can run or compare the finished day-20 state without
-  retyping it.
+- The course shows the code only inside lecture videos, and the lectures change the same code many times (loose script, list of segments, `Snake` class, key bindings, then food, scoreboard and game over). Nobody can run or compare the finished game without retyping it.
 - A loose script cannot be run by someone else without guessing the Python
   version, the environment and the way to start it.
 - A turtle program opens a window, so it is normally not tested, and mistakes
@@ -64,9 +51,7 @@ this project.
 ## Business Opportunity
 
 A single finished, reproducible repository shows the whole path from lecture
-to documented, tested code. It can be compared with the solutions of other
-participants, shared, and reused as the starting point for day 21, which adds
-food, score and game over to the same `Snake` class.
+to documented, tested code. It can be compared with the solutions of other participants, shared, and reused as the pattern for the following days of the course.
 
 ## Objectives
 
@@ -79,6 +64,8 @@ food, score and game over to the same `Snake` class.
 | 5 | Document the project: Doxygen comments in the source with a `Doxyfile`, and a README with set-up instructions for Windows PowerShell, Linux Debian and macOS |
 | 6 | Keep every step traceable: one branch and one pull request per milestone, each pull request closing the issues it completes |
 | 7 | Publish the repository with a description and topics |
+| 8 | Deliver the day-21 rules of the game as the four-step outline gives them: food at a random place that the snake eats, which makes it one segment longer and the score on a scoreboard one higher, in `Food` and `Scoreboard` classes that inherit from `Turtle` |
+| 9 | End the game as the outline gives it: the game is over when the head passes the wall or touches its own tail, the text GAME OVER is shown, and the window closes on a click |
 
 ## Scope
 
@@ -86,20 +73,16 @@ food, score and game over to the same `Snake` class.
 
 - The four lectures of day 20: screen set-up and snake body, animating the
   segments, the `Snake` class, controlling the snake with the arrow keys.
-- Constants in `constants.py`; source in `src/`, tests in `tests/`, documents in
-  `docs/`.
+- The four steps of day 21: adding food, detecting a collision between the snake and the food, updating the score, and the game-over rules (wall and tail), with `Food` and `Scoreboard` classes that inherit from `Turtle`.
+- Constants in `constants.py`; source in `src/`, tests in `tests/`, documents in `docs/`.
 - `pyproject.toml`, Python `.gitignore`, `Doxyfile`, `README.md` following the
   Product Owner's template, a continuous integration (CI) workflow.
 - Repository description and topics on the git host.
 
 ### Out of Scope
 
-- Day 21 of the course: food, detecting a collision with food, the scoreboard,
-  growing the snake, and the game-over rules (wall and tail collision). The
-  `Snake` class is built so that day 21 can extend it, but none of that is
-  delivered here.
-- Anything the lectures do not cover: sound, a menu, high-score storage,
-  levels, configurable speed or window size.
+
+- Anything the lectures do not cover: sound, a menu, high-score storage between games (the request mentions sharing high scores, but no step of day 21 stores one), restarting after game over, levels, configurable speed or window size.
 - Packaging for or publishing to the Python Package Index (PyPI).
 - A mirror of the repository on GitHub (the repository lives on the Tirsvad git
   host; see Open Issues of [PP-001]).
@@ -111,8 +94,7 @@ food, score and game over to the same `Snake` class.
 
 ### Tangible Benefits
 
-- A finished day-20 game state that runs with one command after the README
-  steps.
+- A finished game (days 20 and 21) that runs with one command after the README steps.
 - A test suite that can run in continuous integration without a display.
 - Generated source documentation.
 - A repository page with description, topics and README.
@@ -120,8 +102,8 @@ food, score and game over to the same `Snake` class.
 ### Intangible Benefits
 
 - Practice with the `turtle` coordinate system, lists of objects, constants and
-  classes, which is the aim of the lectures.
-- A base for day 21 and a pattern for the following days of the course.
+  classes and inheritance, which is the aim of the lectures.
+- A pattern for the following days of the course.
 - Confidence from a step-by-step, reviewed delivery.
 
 ## Strategic Alignment
@@ -140,8 +122,10 @@ the framework's rule that planning, review and code stay in step.
 | 4 | Source documentation builds | `doxygen Doxyfile` ends with 0 warnings | Doxygen output |
 | 5 | No runtime dependencies | 0 entries in `[project].dependencies` | `pyproject.toml` |
 | 6 | Names follow the assignment | 100% of the names listed in objective 2 exist with that spelling | Review of `src/` against objective 2 |
-| 7 | Steps are traceable | 3 of 3 milestones merged by pull request, each description with one `Closes #N` line per completed issue | Pull request list and issue states |
+| 7 | Steps are traceable | 5 of 5 milestones merged by pull request, each description with one `Closes #N` line per completed issue | Pull request list and issue states |
 | 8 | The repository page is complete | Non-empty description and at least 5 topics | Git host |
+| 9 | Food, eating and score follow the outline | Food is shown at a random place inside the walls; when the snake eats it, the food moves to a new random place, the snake grows by one segment and the score on the scoreboard rises by 1; `Food` and `Scoreboard` inherit from `Turtle` | Manual run by S01 against the Go/No-Go list of [MIL-004], plus the matching tests |
+| 10 | Game over follows the outline | The game ends when the head passes the wall or touches its own tail; GAME OVER is shown; the window closes on a click | Manual run by S01 against the Go/No-Go list of [MIL-005], plus the matching tests |
 
 ## Risks
 
@@ -153,7 +137,10 @@ the framework's rule that planning, review and code stay in step.
 | The git host has no Actions runner | The continuous integration workflow is never executed | Provide the workflow file and run the same commands locally; recorded as an open issue of [PP-001] |
 | Closing the window during the animation loop ends in a traceback (`_tkinter.TclError` or `turtle.Terminator`) | The game looks broken when it is quit | [MIL-003] requires a clean exit when the window is closed |
 | Author and reviewer are the same person (S01) | A defect can pass review unnoticed | Review against the QC checklists, record each review as an `RC-*`, and let the pull request be the second look |
-| The lectures are available only as the summaries in the request | The game differs from the video | S01 compares the finished game with the video at the [MIL-003] Go/No-Go |
+| The lectures are available only as the summaries in the request | The game differs from the video | S01 compares the finished game with the video at the [MIL-003] and [MIL-005] Go/No-Go |
+| The request gives day 21 only as a four-step outline | The numbers of day 21 (size and colour of the food, the distances of the collisions, the wall, the font) are not known and may differ from the video | [MIL-004] and [MIL-005] list them as assumptions; S01 confirms each against the video before the code is written |
+| `Food` and `Scoreboard` inherit from `turtle.Turtle`, so importing them loads `turtle` and `tkinter` | A machine without `tkinter` cannot run the tests of these classes | The tests install a fake `turtle` module before they import the classes; the decision is an open issue of [PP-001] |
+| The random place of the food makes a test unreliable, or puts the food under the snake | A test fails now and then, or the game looks wrong | The random place comes from one function that the tests replace; whether the food may appear under the snake is an open issue of [PP-001] |
 | Tokens in `.env` leak into the repository | Credentials exposed | `.env` is in `.gitignore`, is never imported, and is not part of any task |
 
 ## Assumptions
@@ -163,8 +150,8 @@ the framework's rule that planning, review and code stay in step.
 - S01 is the only person who reviews and accepts artifacts.
 - The git host is the Tirsvad Gitea instance, and its issues and milestones
   are used for tracking.
-- The four lecture summaries in the request are the only specification of the
-  game; the video is the tie-breaker when a detail is missing.
+- The four lecture summaries in the request are the only specification of day 20; the video is the tie-breaker when a detail is missing.
+- Day 21 has no lecture summaries in the request: the four-step outline is its only specification, and its numbers are assumed until S01 confirms them.
 
 ## Constraints
 
@@ -174,8 +161,7 @@ the framework's rule that planning, review and code stay in step.
   and a `Doxyfile`.
 - Folder structure `src/`, `tests/`, `docs/`.
 - No runtime dependencies unless needed.
-- Effort budget of about one week; the plan ends on 2026-10-15 (proposed, see
-  [PP-001]).
+- Effort budget of about two weeks: phase 1 (day 20) ends on 2026-10-15 and phase 2 (day 21) on 2026-10-21 (both proposed, see [PP-001]).
 - Nothing is committed, pushed or merged without the Product Owner's request;
   changes are reviewed in the working tree first.
 - The plan gate holds: no file under `src/` or `tests/` before an accepted,
@@ -188,23 +174,21 @@ with one participant, so money does not measure either side.
 
 | Costs | Benefits |
 | --- | --- |
-| About one week of S01's spare time, including reviews | A finished and shareable repository (objectives 1 to 7) |
-| Review effort for the planning documents, which is large compared with the size of the game | A traceable, repeatable way of working that day 21 and later days can reuse |
+| About two weeks of S01's spare time, including reviews | A finished and shareable repository (objectives 1 to 9) |
+| Review effort for the planning documents, which is large compared with the size of the game | A traceable, repeatable way of working that later days can reuse |
 | Doxygen and pytest as development tools (not runtime) | Source documentation and automatic checks |
 
 ## Stakeholders
 
 | Stakeholder ID (SA) | Interest in this project |
 | --- | --- |
-| S01 | Wants a correct, tested and documented solution of the assignment: objectives 1 to 7 |
-| S02 | Needs readable, runnable code with the assignment's names and README instructions (objectives 1, 2, 3 and 5) |
+| S01 | Wants a correct, tested and documented solution of the assignment: objectives 1 to 9 |
+| S02 | Needs readable, runnable code with the assignment's names and README instructions (objectives 1, 2, 3, 5, 8 and 9) |
 | S03 | Needs a clear repository page and nothing to install (objectives 3, 5 and 7) |
 
 ## Recommendation
 
-Proceed — the scope is small and fully specified by the four lectures, the cost
-is a week of the Product Owner's time, and the result is a reusable,
-documented repository and a base for day 21.
+Proceed — the scope is small (days 20 and 21 of one game), the cost is two weeks of the Product Owner's time, and the result is a reusable, documented repository.
 
 ---
 
@@ -212,5 +196,6 @@ documented repository and a base for day 21.
 [DICT-001]: ./dictionary.md
 [PP-001]: ./project-plan.md
 [MIL-003]: ./milestones/mil-003-movement-and-keys.md
-[a2c997e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/a2c997e1413e425050df8c50a976ec839ebb4752
+[MIL-004]: ./milestones/mil-004-food-and-score.md
+[MIL-005]: ./milestones/mil-005-game-over.md
 [c033c7b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/020-snake-game/commit/c033c7b660f8b9dcabf13d7556ef6c4e21b7d3a4
