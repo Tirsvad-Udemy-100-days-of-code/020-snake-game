@@ -11,9 +11,9 @@ The game has no runtime dependencies. The code keeps the names of the lectures
 (`Snake`, `create_snake`, `move`, `up`, `down`, `left`, `right`, `segments`,
 `head`, `game_is_on`) so that you can compare it with your own solution.
 
-> **Status:** under construction. The project foundation, the window and the
-> snake body are in place. The snake does not move yet: the movement and the
-> arrow keys are added in the last milestone; see `docs/project-plan.md`.
+> **Status:** the day-20 game is finished: the snake moves by itself and is
+> steered with the arrow keys. There is no food, score or game over yet (day 21),
+> so the game runs until you close the window; see `docs/project-plan.md`.
 
 ## Requirements
 
@@ -78,10 +78,18 @@ With the virtual environment active:
 python -m snake_game
 ```
 
-It opens a black 600 by 600 window titled "My Snake Game" with the snake of
-three white squares in the middle. Click the window to close it. The snake does
-not move yet, and the arrow keys have no effect until the last milestone (see the
-status above).
+It opens a black 600 by 600 window titled "My Snake Game". The snake of three
+white squares starts in the middle and moves to the right by itself, 20 pixels
+every 0.1 seconds.
+
+| Key | Effect |
+| --- | --- |
+| Up, Down, Left, Right | Turn the snake |
+
+The snake never turns straight back onto itself: the arrow key opposite to the
+way it is going is ignored, even when two keys are pressed within one move.
+Close the window to end the game. Without walls (day 21) the snake leaves the
+window if you do not turn it.
 
 ## Run the tests
 
